@@ -4,7 +4,6 @@
 #include <queue>
 
 
-
 template <typename T>
 void printVector (const std::vector<T>& myVector){
     for(unsigned i = 0 ; i < myVector.size(); i++){
@@ -27,8 +26,9 @@ void priorityQueue_pop(std::vector<T> &myVector){
 template <typename T> // tested
 void priorityQueue_popN(std::vector<T> &myVector, const unsigned& N){
     std::sort_heap(myVector.begin(),myVector.end());
-    myVector.erase(myVector.end()-N-1,myVector.end()-N);
     std::reverse(myVector.begin(),myVector.end());
+    myVector.erase(myVector.begin()+N,myVector.begin()+(N+1));
+
 }
 
 template <typename T> // tested
@@ -58,11 +58,12 @@ template <typename T>
 void priorityQueue_forceUpdate(std::vector<T> &myVector){
     std::sort_heap(myVector.begin(),myVector.end());
     std::reverse(myVector.begin(),myVector.end());
+    std::make_heap(myVector.begin(),myVector.end());
 }
 
 int main() {
 
-    std::vector<double> numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<double> numbers = {0, 0,0,0,0,1, 2, 3, 4, 5, 6, 7, 8, 9,9,9,9,9};
 
     std::make_heap(numbers.begin(), numbers.end());
 
@@ -87,6 +88,17 @@ int main() {
         priorityQueue_push<unsigned>(testVect,numbers[i]);
     }
 
+    printVector<unsigned>(testVect);
+
+    priorityQueue_update(testVect);
+    printVector<unsigned>(testVect);
+
+    std::cout<<std::endl;
+    priorityQueue_forceUpdate(testVect);
+    printVector<unsigned>(testVect);
+    priorityQueue_forceUpdate(testVect);
+    printVector<unsigned>(testVect);
+    priorityQueue_forceUpdate(testVect);
     printVector<unsigned>(testVect);
 
     // testing push and top
